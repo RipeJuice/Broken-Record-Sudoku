@@ -228,6 +228,6 @@ def game_state(current_board):
             if cell['value'] == 0:
                 game_complete = False
 
-    print(game_complete)
+    print(f"The value of game state: {game_complete}")
     return game_complete
 
