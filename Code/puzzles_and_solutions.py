@@ -142,7 +142,6 @@ def check_square(board_size, current_board, row, col):
     if board_size == 4:
         first_section = [1,2]
         middle_section = [3, 4]
-        print("board is 4 by 4")
     else:
         first_section = [1, 2, 3]
         middle_section = [4, 5, 6]
@@ -170,7 +169,6 @@ def check_square(board_size, current_board, row, col):
 
     elif row in middle_section:
         for i in range(int(board_size ** 0.5), 2 * int(board_size ** 0.5)):
-            for i in range(0, int(board_size ** 0.5)):
 
                 if col in first_section:
                     for j in range(0, int(board_size ** 0.5)):
@@ -189,7 +187,6 @@ def check_square(board_size, current_board, row, col):
 
     if row in last_section:
         for i in range(2 * int(board_size ** 0.5), 3 * int(board_size ** 0.5)):
-            for i in range(0, int(board_size ** 0.5)):
 
                 if col in first_section:
                     for j in range(0, int(board_size ** 0.5)):
@@ -208,7 +205,7 @@ def check_square(board_size, current_board, row, col):
 
     # for loop which iterates through the cells in the square
     for cell in square_of_cells:
-
+        print(cell)
          # Sets repeated_number to true if the cell value is in the set
         if cell in seen:
             repeated_number = True
