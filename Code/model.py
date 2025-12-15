@@ -26,6 +26,7 @@ from controller import SudokuInputController
 from Code import game_setup
 from Code import view
 from Code.config import music_files
+from Code import gen_algorithm
 from view import GameView
 from Code import puzzles_and_solutions
 from Code import music
@@ -225,6 +226,7 @@ def main():
                                     puzzles_and_solutions.check_row(current_board[row])# Calls function to check the row
                                     puzzles_and_solutions.check_column(current_board, col)# Calls function to check the column
                                     puzzles_and_solutions.check_square(BOARD_SIZE, current_board, row, col)#Calls function to check the square
+                                    puzzles_and_solutions.game_state(current_board)#Calls function to check whether the game is finished
                             except ValueError:
                                 pass # If user didn't press a valid key
 
@@ -239,9 +241,15 @@ def main():
         if show_notification and current_time_ms > notification_timer:
             show_notification = False
 
+        if current_board == config.solution:
+            print("You win!")
 
 
-        hue = (hue + 0.0005) % 1.0
+
+
+
+
+        hue = (hue + 0.0005) % 1.04
 
         if note_mode:
             glow_color = (255, 165, 0)
