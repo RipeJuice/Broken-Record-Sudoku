@@ -220,5 +220,7 @@ def main():
         print("  " + " ".join(solution_string[i * BOARD_SIZE: (i + 1) * BOARD_SIZE]))
 
 
+main()
+
 if __name__ == '__main__':
     main()
