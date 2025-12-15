@@ -248,6 +248,8 @@ def main():
 
         if note_mode:
             glow_color = (255, 165, 0)
+        #elif puzzles_and_solutions.check_row(current_board) or puzzles_and_solutions.check_column(current_board, col) or puzzles_and_solutions.check_square(BOARD_SIZE, current_board, row, col):
+            glow_color = (255, 0, 0)
         else:
             glow_color = (0, 0, 139)
 
