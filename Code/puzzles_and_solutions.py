@@ -100,7 +100,7 @@ def check_row(row_of_cells: list):
           seen.add(cell['value'])
 
     #Returns repeated_number
-    print(repeated_number)
+    print(f"The value of repeated number for row: {repeated_number}")
     return repeated_number
 
 #Function to check column
@@ -125,7 +125,7 @@ def check_column(current_board, col):
       #Otherwise, adds the cell value to the set if it's not 0
       elif cell not in seen and cell != 0:
           seen.add(cell)
-    print(repeated_number)
+    print(f"The value of repeated number for column: {repeated_number}")
     return repeated_number
 
 def check_square(board_size, current_board, row, col):
@@ -214,7 +214,7 @@ def check_square(board_size, current_board, row, col):
         # Otherwise, adds the cell value to the set if it's not 0
         elif cell not in seen and cell != 0:
             seen.add(cell)
-    print(repeated_number)
+    print(f"repeated number in square: {repeated_number}")
     return repeated_number
 
 
