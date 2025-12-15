@@ -236,7 +236,7 @@ def main():
 
 
 
-        hue = (hue + 0.0005) % 1.0
+        hue = (hue + 0.0005) % 1.04
 
         if note_mode:
             glow_color = (255, 165, 0)
