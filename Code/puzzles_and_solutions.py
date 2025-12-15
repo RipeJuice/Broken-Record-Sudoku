@@ -132,11 +132,14 @@ def check_square(board_size, current_board, row, col):
     first_section = []
     middle_section = []
     last_section = []
+    row = row + 1
+    col = col + 1
 
     #Calculates the sections of the board based on board_size
     if board_size == 4:
         first_section = [1,2]
         middle_section = [3, 4]
+        print("board is 4 by 4")
     else:
         first_section = [1, 2, 3]
         middle_section = [4, 5, 6]
@@ -145,57 +148,58 @@ def check_square(board_size, current_board, row, col):
     #Calculates which section the cell is in board
     if row in first_section:
 
-        for i in range(1, int(board_size ** 0.5)):
+        for i in range(0, int(board_size ** 0.5)):
 
             if col in first_section:
-                for j in range(1, int(board_size ** 0.5)):
+                for j in range(0, int(board_size ** 0.5)):
                     # Appending the correct values to the square_of_cells based on board_size
                     square_of_cells.append(current_board[i][j]["value"])
 
             elif col in middle_section:
-                for j in range(int(board_size ** 0.5) + 1, 2 * int(board_size ** 0.5)):
+                for j in range(int(board_size ** 0.5), 2 * int(board_size ** 0.5)):
                     # Appending the correct values to the square_of_cells based on board_size
                     square_of_cells.append(current_board[i][j]["value"])
 
             elif col in last_section:
-                for j in range(2 * int(board_size ** 0.5) + 1, 3 * int(board_size ** 0.5)):
+                for j in range(2 * int(board_size ** 0.5), 3 * int(board_size ** 0.5)):
                     # Appending the correct values to the square_of_cells based on board_size
                     square_of_cells.append(current_board[i][j]["value"])
 
     elif row in middle_section:
-        for i in range(int(board_size ** 0.5) + 1, 2 * int(board_size ** 0.5)):
-            for i in range(1, int(board_size ** 0.5)):
+        for i in range(int(board_size ** 0.5), 2 * int(board_size ** 0.5)):
+            for i in range(0, int(board_size ** 0.5)):
 
                 if col in first_section:
-                    for j in range(1, int(board_size ** 0.5)):
+                    for j in range(0, int(board_size ** 0.5)):
                         # Appending the correct values to the square_of_cells based on board_size
                         square_of_cells.append(current_board[i][j]["value"])
 
                 elif col in middle_section:
-                    for j in range(int(board_size ** 0.5) + 1, 2 * int(board_size ** 0.5)):
+                    for j in range(int(board_size ** 0.5), 2 * int(board_size ** 0.5)):
                         # Appending the correct values to the square_of_cells based on board_size
                         square_of_cells.append(current_board[i][j]["value"])
 
                 elif col in last_section:
-                    for j in range(2 * int(board_size ** 0.5) + 1, 3 * int(board_size ** 0.5)):
+                    for j in range(2 * int(board_size ** 0.5), 3 * int(board_size ** 0.5)):
                         # Appending the correct values to the square_of_cells based on board_size
                         square_of_cells.append(current_board[i][j]["value"])
+
     if row in last_section:
-        for i in range(2 * int(board_size ** 0.5) + 1, 3 * int(board_size ** 0.5)):
-            for i in range(1, int(board_size ** 0.5)):
+        for i in range(2 * int(board_size ** 0.5), 3 * int(board_size ** 0.5)):
+            for i in range(0, int(board_size ** 0.5)):
 
                 if col in first_section:
-                    for j in range(1, int(board_size ** 0.5)):
+                    for j in range(0, int(board_size ** 0.5)):
                         # Appending the correct values to the square_of_cells based on board_size
                         square_of_cells.append(current_board[i][j]["value"])
 
                 elif col in middle_section:
-                    for j in range(int(board_size ** 0.5) + 1, 2 * int(board_size ** 0.5)):
+                    for j in range(int(board_size ** 0.5), 2 * int(board_size ** 0.5)):
                         # Appending the correct values to the square_of_cells based on board_size
                         square_of_cells.append(current_board[i][j]["value"])
 
                 elif col in last_section:
-                    for j in range(2 * int(board_size ** 0.5) + 1, 3 * int(board_size ** 0.5)):
+                    for j in range(2 * int(board_size ** 0.5), 3 * int(board_size ** 0.5)):
                         # Appending the correct values to the square_of_cells based on board_size
                         square_of_cells.append(current_board[i][j]["value"])
 
