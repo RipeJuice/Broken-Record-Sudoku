@@ -140,6 +140,8 @@ def main_menu():
     current_difficulty_index = 0  # Start at the first one
     selected_difficulty = difficulties_all[current_difficulty_index]
     size_text = "9 x 9"
+    play_color = WHITE
+    play = True
     draw_text(size_text, pygame.font.SysFont("Impact", 55), BLACK, screen, WIDTH // 2, HEIGHT // 3 + 25)
     draw_text(selected_difficulty, pygame.font.SysFont("Impact", 55), BLACK, screen, WIDTH // 2, HEIGHT // 3 + 25 + 60)
 
@@ -170,9 +172,10 @@ def main_menu():
         pygame.draw.rect(screen, DARK_GRAY, pygame.Rect(WIDTH // 4 + 5, HEIGHT // 3 + 60 + 60 + 5, WIDTH // 2, 50))
         pygame.draw.rect(screen, WHITE, size_btn)
         pygame.draw.rect(screen, WHITE, diff_btn)
-        pygame.draw.rect(screen, WHITE, play_btn)
+        pygame.draw.rect(screen, play_color, play_btn)
         draw_text("PLAY", pygame.font.SysFont("Impact", 55), BLACK, screen, WIDTH // 2, HEIGHT // 3 + 25 + 60 + 60)
-
+        if not play:
+            draw_text("* No evil levels for 4 x 4", pygame.font.SysFont("Impact", 20), WHITE, screen, WIDTH // 2, HEIGHT // 3 + 25 + 60 + 60 + 40)
 
 
         draw_text(size_text, pygame.font.SysFont("Impact", 55), BLACK, screen, WIDTH // 2, HEIGHT // 3 + 25)
@@ -251,8 +254,18 @@ def main_menu():
 
                 if diff_btn.collidepoint(event.pos):
                     current_difficulty_index = (current_difficulty_index + 1) % len(difficulties_all)
+                    if selected_size == 4 and current_difficulty_index == 3:
+                        current_difficulty_index = 0
                     selected_difficulty = difficulties_all[current_difficulty_index]
                     print(selected_difficulty)
+
+                if selected_difficulty == "evil" and selected_size == 4:
+                    play_color = LIGHT_GRAY
+                    play = False
+                else:
+                    play = True
+                    play_color = WHITE
+
 
                 """
                 if music_icon_rect.collidepoint(event.pos):
@@ -265,7 +278,7 @@ def main_menu():
                     pass
                 """
                 # DIFFICULTY
-                if play_btn.collidepoint(event.pos):
+                if play_btn.collidepoint(event.pos) and play == True:
                     config.BOARD_SIZE = selected_size
                     config.DIFFICULTY = selected_difficulty
 
