@@ -10,6 +10,8 @@ DIFFICULTY = None
 
 BOARD = None
 
+solution = None
+
 WIDTH = 640
 HEIGHT = 640
 WHITE = (255, 255, 255)

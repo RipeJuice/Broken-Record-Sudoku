@@ -26,6 +26,7 @@ from controller import SudokuInputController
 from Code import game_setup
 from Code import view
 from Code.config import music_files
+from Code import gen_algorithm
 from view import GameView
 from Code import puzzles_and_solutions
 from Code import music
@@ -234,6 +235,12 @@ def main():
         global show_notification
         if show_notification and current_time_ms > notification_timer:
             show_notification = False
+
+        if current_board == config.solution:
+            print("You win!")
+
+
+
 
 
 
