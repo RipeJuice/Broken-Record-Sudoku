@@ -220,6 +220,7 @@ def main():
                                     puzzles_and_solutions.check_row(current_board[row])# Calls function to check the row
                                     puzzles_and_solutions.check_column(current_board, col)# Calls function to check the column
                                     puzzles_and_solutions.check_square(BOARD_SIZE, current_board, row, col)#Calls function to check the square
+                                    puzzles_and_solutions.game_state(current_board)#Calls function to check whether the game is finished
                             except ValueError:
                                 pass # If user didn't press a valid key
 

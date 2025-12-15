@@ -101,6 +101,7 @@ def check_row(row_of_cells: list):
 
     #Returns repeated_number
     print(repeated_number)
+    return repeated_number
 
 #Function to check column
 def check_column(current_board, col):
@@ -125,6 +126,7 @@ def check_column(current_board, col):
       elif cell not in seen and cell != 0:
           seen.add(cell)
     print(repeated_number)
+    return repeated_number
 
 def check_square(board_size, current_board, row, col):
 
@@ -205,7 +207,6 @@ def check_square(board_size, current_board, row, col):
 
     # for loop which iterates through the cells in the square
     for cell in square_of_cells:
-        print(cell)
          # Sets repeated_number to true if the cell value is in the set
         if cell in seen:
             repeated_number = True
@@ -214,3 +215,19 @@ def check_square(board_size, current_board, row, col):
         elif cell not in seen and cell != 0:
             seen.add(cell)
     print(repeated_number)
+    return repeated_number
+
+
+
+def game_state(current_board):
+
+    game_complete = True
+
+    for row in current_board:
+        for cell in row:
+            if cell['value'] == 0:
+                game_complete = False
+
+    print(game_complete)
+    return game_complete
+
