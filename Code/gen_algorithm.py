@@ -1,5 +1,11 @@
 import random
 
+import pygame
+from game_setup import screen, HEIGHT, WHITE, BLACK
+
+
+pygame.init()
+
 # --- GLOBAL BOARD CONFIGURATION ---
 BOARD_SIZE = 9  # Side length of the Sudoku (9 for 9x9)
 BLOCK_SIZE = 3  # Side length of the square blocks (3 for 3x3)
@@ -12,10 +18,24 @@ POPULATION_SIZE = 5000
 GENES = '''123456789'''
 
 # The initial Sudoku puzzle string. '-' represents an empty cell.
-INITIAL_PUZZLE = "8-7-3---496----3582348-19-7-1---5-4-----4-----4----52----21-43-1-3--48--4-65--1--"
+INITIAL_PUZZLE = None
 PUZZLE_LENGTH = BOARD_SIZE * BOARD_SIZE
 # The indices of the fixed (preset) numbers
-FIXED_INDICES = [i for i, char in enumerate(INITIAL_PUZZLE) if char != '-']
+FIXED_INDICES = []
+
+
+def setup_puzzle_constants():
+    """Calculates FIXED_INDICES based on the assigned INITIAL_PUZZLE."""
+    global INITIAL_PUZZLE, FIXED_INDICES, PUZZLE_LENGTH
+
+    # 1. Assert that the puzzle has been assigned
+    if INITIAL_PUZZLE is None:
+        raise ValueError(
+            "INITIAL_PUZZLE must be assigned a puzzle string (e.g., '53--7--...') before running setup_puzzle_constants.")
+
+    # 2. Recalculate based on the new, non-None puzzle
+    FIXED_INDICES = [i for i, char in enumerate(INITIAL_PUZZLE) if char != '-']
+    PUZZLE_LENGTH = len(INITIAL_PUZZLE)  # Should be BOARD_SIZE * BOARD_SIZE
 
 
 class Individual(object):
@@ -26,6 +46,7 @@ class Individual(object):
     def __init__(self, chromosome):
         self.chromosome = chromosome
         self.fitness = self.cal_fitness()
+
 
     @staticmethod
     def random_gene():
@@ -157,6 +178,11 @@ class Individual(object):
 
 # Driver code
 def main():
+    setup_puzzle_constants()
+
+    screen.fill(BLACK)
+
+
     global POPULATION_SIZE, INITIAL_PUZZLE, BOARD_SIZE
 
     generation = 1
@@ -170,7 +196,17 @@ def main():
     print(f"Initial Puzzle ({BOARD_SIZE}x{BOARD_SIZE}): {INITIAL_PUZZLE}")
     print(f"Starting Genetic Algorithm to Solve Sudoku (Pop Size: {POPULATION_SIZE})...")
 
+    x = 100
+    y = HEIGHT // 2
+    width = 1
+    height = 20
+
     while not found:
+
+        loading_bar = pygame.Rect(x, y, width, height)
+        pygame.draw.rect(screen, WHITE, loading_bar)
+        pygame.display.update()
+
         population = sorted(population, key=lambda x: x.fitness)
         best_fitness = population[0].fitness
 
@@ -209,6 +245,8 @@ def main():
                          "".join(population[0].chromosome[:BOARD_SIZE])))
 
         generation += 1
+        x -= 10
+        width += 20
 
     print("\n*** SUDOKU SOLUTION FOUND ***")
     print("Generation: {}\tFitness: {}". \
@@ -220,7 +258,7 @@ def main():
         print("  " + " ".join(solution_string[i * BOARD_SIZE: (i + 1) * BOARD_SIZE]))
 
 
-main()
+
 
 if __name__ == '__main__':
     main()

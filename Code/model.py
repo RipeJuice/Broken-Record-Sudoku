@@ -35,6 +35,7 @@ import sys
 import colorsys
 import random
 from Code import music
+import gen_algorithm
 
 
 
@@ -137,6 +138,8 @@ def main():
     random_int = random.randint(1, 10)
     current_board = initialize_game_grid(current_board_string, BOARD_SIZE)
 
+    gen_algorithm.INITIAL_PUZZLE = current_board_string
+
     print(BOARD_SIZE)
     print(current_board)
 
@@ -154,6 +157,8 @@ def main():
     # The variable BOARD_SIZE is passed into the GameView class through the parameter size.
     # Also, an attribute of a specific instance of GameView called board_size is assigned the value of the parameter size which is BOARD_SIZE.
     game_view_instance = GameView(BOARD_SIZE)
+
+    gen_algorithm.main()
 
     # Before game defaults
     selected_cell = None
