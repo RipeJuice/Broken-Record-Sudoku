@@ -1,5 +1,4 @@
 import random
-import config
 
 # --- GLOBAL BOARD CONFIGURATION ---
 BOARD_SIZE = 9  # Side length of the Sudoku (9 for 9x9)
@@ -219,7 +218,7 @@ def main():
     print("Solution Board:")
     for i in range(BOARD_SIZE):
         print("  " + " ".join(solution_string[i * BOARD_SIZE: (i + 1) * BOARD_SIZE]))
-    config.solution = solution_string
+
 
 
 
