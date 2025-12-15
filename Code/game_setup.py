@@ -135,10 +135,13 @@ def main_menu():
     selected_difficulty = None
 
     # Difficulty pools
-    difficulties_all = ["easy", "medium", "hard"]
-    difficulties_9x9_only = ["evil"]
-
-
+    difficulties_all = ["easy", "medium", "hard", "evil"]
+    selected_size = 9
+    current_difficulty_index = 0  # Start at the first one
+    selected_difficulty = difficulties_all[current_difficulty_index]
+    size_text = "9 x 9"
+    draw_text(size_text, pygame.font.SysFont("Impact", 55), BLACK, screen, WIDTH // 2, HEIGHT // 3 + 25)
+    draw_text(selected_difficulty, pygame.font.SysFont("Impact", 55), BLACK, screen, WIDTH // 2, HEIGHT // 3 + 25 + 60)
 
     while True:
 
@@ -148,8 +151,9 @@ def main_menu():
         # --- SIZE BUTTONS ---
         font_size = 20
         draw_text('v0.8.1', pygame.font.SysFont("Arial", font_size), WHITE, screen, WIDTH - (WIDTH // 20), HEIGHT - (HEIGHT // 30))
-        size4_btn = pygame.Rect(WIDTH // 4, HEIGHT // 3, WIDTH // 2, 50)
-        size9_btn = pygame.Rect(WIDTH // 4, HEIGHT // 3 + 60, WIDTH // 2, 50)
+        size_btn = pygame.Rect(WIDTH // 4, HEIGHT // 3, WIDTH // 2, 50)
+        diff_btn = pygame.Rect(WIDTH // 4, HEIGHT // 3 + 60, WIDTH // 2, 50)
+        play_btn = pygame.Rect(WIDTH // 4, HEIGHT // 3 + 60 + 60, WIDTH // 2, 50)
         font_size = 40
         menu_font = pygame.font.SysFont("Impact", font_size)
         draw_text('Broken Record', menu_font, WHITE, screen, WIDTH // 2, HEIGHT // 4 - 50)
@@ -163,12 +167,16 @@ def main_menu():
         font_size = 40
         pygame.draw.rect(screen, DARK_GRAY, pygame.Rect(WIDTH // 4 + 5, HEIGHT // 3 + 5, WIDTH // 2, 50))
         pygame.draw.rect(screen, DARK_GRAY, pygame.Rect(WIDTH // 4 + 5, HEIGHT // 3 + 60 + 5, WIDTH // 2, 50))
-        pygame.draw.rect(screen, WHITE, size4_btn)
-        pygame.draw.rect(screen, WHITE, size9_btn)
+        pygame.draw.rect(screen, DARK_GRAY, pygame.Rect(WIDTH // 4 + 5, HEIGHT // 3 + 60 + 60 + 5, WIDTH // 2, 50))
+        pygame.draw.rect(screen, WHITE, size_btn)
+        pygame.draw.rect(screen, WHITE, diff_btn)
+        pygame.draw.rect(screen, WHITE, play_btn)
+        draw_text("PLAY", pygame.font.SysFont("Impact", 55), BLACK, screen, WIDTH // 2, HEIGHT // 3 + 25 + 60 + 60)
 
-        draw_text("4 x 4", pygame.font.SysFont("Impact", 55), BLACK, screen, WIDTH//2, HEIGHT//3 + 25)
-        draw_text("9 x 9", pygame.font.SysFont("Impact", 55), BLACK, screen, WIDTH//2, HEIGHT//3 + 85)
-        diff_buttons = []
+
+
+        draw_text(size_text, pygame.font.SysFont("Impact", 55), BLACK, screen, WIDTH // 2, HEIGHT // 3 + 25)
+        draw_text(selected_difficulty, pygame.font.SysFont("Impact", 55), BLACK, screen, WIDTH // 2, HEIGHT // 3 + 85)
 
         # Music Page
         page = pygame.Rect(WIDTH // 2, HEIGHT // 2, WIDTH * 0.7, HEIGHT * 0.7)
@@ -222,22 +230,6 @@ def main_menu():
 
 
 
-        # Draw difficulty buttons AFTER size is chosen
-        if selected_size:
-
-            diff_buttons = []
-            diff_list = difficulties_all + (difficulties_9x9_only if selected_size == 9 else [])
-
-            pygame.draw.rect(screen, WHITE, pygame.Rect(WIDTH // 3, HEIGHT // 3 + 110 + 30, WIDTH // 3, 5))
-            for i, diff in enumerate(diff_list):
-                pygame.draw.rect(screen, DARK_GRAY, pygame.Rect(WIDTH // 4 + 5, HEIGHT // 2 + 15 + i * 60 + 50, WIDTH // 2, 50))
-                rect = pygame.Rect(WIDTH//4, HEIGHT//2 + 60 + i*60, WIDTH//2, 50)
-                diff_buttons.append((rect, diff))
-                pygame.draw.rect(screen, WHITE, rect)
-                # move to the right a bit, the same amount away as it is from the bottom of the button
-
-                draw_text(diff.upper(), pygame.font.SysFont("Impact", 55), BLACK, screen, WIDTH//2, rect.y + 25)
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -245,11 +237,23 @@ def main_menu():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # SIZE
-                if size4_btn.collidepoint(event.pos):
-                    selected_size = 4
+                if size_btn.collidepoint(event.pos):
+                    if selected_size == 9:
+                        selected_size = 4
+                        size_text = "4 x 4"
+                        print(selected_size)
+                    else:
+                        selected_size = 9
+                        size_text = "9 x 9"
+                        print(selected_size)
 
-                if size9_btn.collidepoint(event.pos):
-                    selected_size = 9
+
+
+                if diff_btn.collidepoint(event.pos):
+                    current_difficulty_index = (current_difficulty_index + 1) % len(difficulties_all)
+                    selected_difficulty = difficulties_all[current_difficulty_index]
+                    print(selected_difficulty)
+
                 """
                 if music_icon_rect.collidepoint(event.pos):
                     music_open = True
@@ -261,18 +265,12 @@ def main_menu():
                     pass
                 """
                 # DIFFICULTY
-                if selected_size:
-                    for rect, diff in diff_buttons:
-                        if rect.collidepoint(event.pos):
-                            selected_difficulty = diff
-                            print(selected_difficulty)
-                            print(selected_size)
+                if play_btn.collidepoint(event.pos):
+                    config.BOARD_SIZE = selected_size
+                    config.DIFFICULTY = selected_difficulty
 
-                            config.BOARD_SIZE = selected_size
-                            config.DIFFICULTY = selected_difficulty
-
-                            print(f"Game Settings Selected: Size={config.BOARD_SIZE}, Diff={config.DIFFICULTY}")
-                            return selected_size, selected_difficulty
+                    print(f"Game Settings Selected: Size={config.BOARD_SIZE}, Diff={config.DIFFICULTY}")
+                    return selected_size, selected_difficulty
 
         pygame.display.update()
 

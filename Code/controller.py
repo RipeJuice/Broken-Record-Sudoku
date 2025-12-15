@@ -181,7 +181,7 @@ class SudokuInputController:
             if not row_str.isdigit() or not number_str.isdigit():
                 return None, None, None
 
-            # chanhges to grid indices and number value
+            # changes to grid indices and number value
             col_index = ord(col_letter) - ord('A')  # changes letter to column index
             row_index = int(row_str) - 1  # changes to 0-based row index
             number = int(number_str)  # changes number string to integer
